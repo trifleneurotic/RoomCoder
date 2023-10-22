@@ -1,8 +1,10 @@
 ﻿@page "/"
+@using Microsoft.AspNetCore.Mvc.RazorPages;
 @namespace RoomCoder.Pages
+@model HostPageModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = "_Layout";
 }
 
-<component type="typeof(App)" render-mode="Server" />
+<component type="typeof(App)" render-mode="ServerPrerendered" />

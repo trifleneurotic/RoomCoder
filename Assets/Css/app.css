@@ -41,3 +41,19 @@
 .blazor-error-boundary::after {
     content: "An error has occurred."
 }
+
+
+
+th {
+    padding-top: 12px;
+    padding-bottom: 6px;
+    padding-left: 30px;
+    padding-right: 20px;
+}
+
+td {
+    padding-top: 12px;
+    padding-bottom: 6px;
+    padding-left: 30px;
+    padding-right: 20px;
+}

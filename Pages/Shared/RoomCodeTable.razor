@@ -1,10 +1,11 @@
 @attribute [Authorize]
+
 <div>
     <table cellpadding="0" cellspacing="0">
         <tr>
             <th>Room Number</th>
-            <th>Room Code</th>
-            <th>Current Code Number</th>
+            <th>Current Code</th>
+            <th>Count</th>
             <AuthorizeView Roles="@CustomRoles.Admin">
                 <Authorized>
                     <th>Generate</th>
@@ -14,14 +15,29 @@
         </tr>
         @foreach (KeyValuePair<byte, ushort> currentCodeEntry in _roomCodes)
         {
+            var idForGenerate = "Generate_" + currentCodeEntry.Key;
+            var idForCycle = "Cycle_" + currentCodeEntry.Key;
+
             <tr>
                 <td>@currentCodeEntry.Key</td>
                 <td>@currentCodeEntry.Value</td>
-                <td>@CurrentCodeNumbersService.OrderedCurrentCodeNumbers[currentCodeEntry.Key]</td>
+                <td>@CurrentCodeNumbersService.OrderedCurrentCodeNumbers[currentCodeEntry.Key] / 19</td>
                 <AuthorizeView Roles="@CustomRoles.Admin">
                     <Authorized>
-                        <td>GenerateButton</td>
-                        <td>CycleButton</td>
+                        @if (CurrentCodeNumbersService.OrderedCurrentCodeNumbers[currentCodeEntry.Key] != 19)
+                        {
+                            <td>Generate</td>
+                            <td>
+                                <form method="post"><input type="hidden" name="id" value="@idForCycle" /><input type="submit" value="Cycle" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium" /></form>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <form method="post"><input type="hidden" name="id" value="@idForGenerate" /><input type="submit" value="Generate" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium" /></form>
+                            </td>
+                            <td>Cycle</td>
+                        }
                     </Authorized>
                 </AuthorizeView>
             </tr>

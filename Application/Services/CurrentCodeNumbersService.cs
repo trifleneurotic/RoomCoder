@@ -11,7 +11,7 @@ public class CurrentCodeNumbersService
 
     private readonly DatabaseContext _db;
 
-    private static SortedDictionary<byte, byte> _orderedCurrentCodeNumbers;
+    private static SortedDictionary<byte, byte>? _orderedCurrentCodeNumbers;
     public SortedDictionary<byte, byte> OrderedCurrentCodeNumbers
     {
         get
@@ -19,6 +19,20 @@ public class CurrentCodeNumbersService
             this.GetCurrentCodeNumbersAsync();
             return _orderedCurrentCodeNumbers;
         }
+    }
+
+    public async void CycleCurrentCodeNumber(byte roomNumber)
+    {
+        var currentCodeRecord = (CurrentCode)await _db.CurrentCodes.FirstAsync(x => x.RoomNumber == roomNumber);
+        currentCodeRecord.CurrentCodeNumber += 1;
+        _db.CurrentCodes.Save<CurrentCode>(currentCodeRecord);
+    }
+
+    public async void ResetCurrentCodeNumber(byte roomNumber)
+    {
+        var currentCodeRecord = (CurrentCode)await _db.CurrentCodes.FirstAsync(x => x.RoomNumber == roomNumber);
+        currentCodeRecord.CurrentCodeNumber = 1;
+        _db.CurrentCodes.Save<CurrentCode>(currentCodeRecord);
     }
 
     public CurrentCodeNumbersService(DatabaseContext db)
@@ -29,12 +43,12 @@ public class CurrentCodeNumbersService
         {
             for (int i = 0; i < CodeLimit; i++)
             {
-                var currentCode = new CurrentCode();
-                currentCode.RoomNumber = (byte)(i + 1);
-                currentCode.CurrentCodeNumber = 1;
-                _db.CurrentCodes.Save<CurrentCode>(currentCode);
+                var newCurrentCodeRecord = new CurrentCode();
+                newCurrentCodeRecord.RoomNumber = (byte)(i + 1);
+                newCurrentCodeRecord.CurrentCodeNumber = 1;
+                _db.CurrentCodes.Save<CurrentCode>(newCurrentCodeRecord);
             }
-          }
+        }
     }
 
     private async void GetCurrentCodeNumbersAsync()
@@ -44,7 +58,7 @@ public class CurrentCodeNumbersService
         for (int i = 0; i < CodeLimit; i++)
         {
             var currentCodeRecord = (CurrentCode)await _db.CurrentCodes.FirstAsync(x => x.RoomNumber == (byte)(i + 1));
-            _orderedCurrentCodeNumbers.Add(currentCodeRecord.RoomNumber, currentCodeRecord.CurrentCodeNumber);
+            _orderedCurrentCodeNumbers.TryAdd(currentCodeRecord.RoomNumber, currentCodeRecord.CurrentCodeNumber);
         }
     }
 }

@@ -11,6 +11,8 @@ using Spark.Library.Auth;
 using RoomCoder.Application.Jobs;
 using Spark.Library.Mail;
 using Vite.AspNetCore.Extensions;
+using Microsoft.AspNetCore.Mvc;
+using IARRoomCoder.Application.Services;
 
 namespace RoomCoder.Application.Startup;
 
@@ -34,6 +36,14 @@ public static class AppServiceRegistration
         services.AddEventServices();
         services.AddEvents();
         services.AddMailer(config);
+
+        // remove if in Prod
+        services.AddMvc().AddRazorPagesOptions(o =>
+        {
+            o.Conventions.ConfigureFilter(new IgnoreAntiforgeryTokenAttribute());
+        });
+
+        services.AddScoped<PostFormService>();
         return services;
     }
 
