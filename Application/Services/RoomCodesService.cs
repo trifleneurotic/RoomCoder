@@ -16,7 +16,12 @@ public class RoomCodesService
 
     private string GenerateRoomCode()
     {
-        return _random.Next(0, 9999).ToString("D4");
+        int i = _random.Next(0, 9999);
+        if(i < 1000)
+        {
+            i += (1000 * _random.Next(1, 10));
+        }
+        return i.ToString("D4");
     }
 
     public ushort GetRoomCode(byte roomNumber, byte codeNumber)
