@@ -14,7 +14,11 @@ public partial class RoomCodeTable
     [Inject] public RoomCodesService? RoomCodesService { get; set; }
     [Inject] public PostFormService? PostFormService { get; set; }
 
+    private ConfirmPopup? confirmPopup;
+
     private Dictionary<byte, ushort> _roomCodes = new Dictionary<byte, ushort>();
+
+    private byte RoomNumber;
 
     protected override void OnInitialized()
     {
@@ -23,25 +27,34 @@ public partial class RoomCodeTable
         {
             _roomCodes.Add(keyValuePair.Key, RoomCodesService.GetRoomCode(keyValuePair.Key, keyValuePair.Value));
         }
+
         var data = PostFormService.Form?["id"];
         string action = data.GetValueOrDefault().ToString();
 
         if(!action.IsNullOrEmpty())
         {
-            if(action.StartsWith("Cycle"))
-            {
-                Cycle(Int32.Parse(action.Substring(6)));
-            }
-            else
-            {
-                Generate(Int32.Parse(action.Substring(9)));
-            }
+            Generate(Int32.Parse(action.Substring(9)));
         }
     }
-    private void Cycle(int id)
+
+    private void CycleCheckpoint(int id)
     {
-        CurrentCodeNumbersService.CycleCurrentCodeNumber((byte)id);
+        RoomNumber = (byte)id;
+        confirmPopup.ShowPop();
     }
+
+    private void CycleProceed()
+    {
+       CurrentCodeNumbersService.CycleCurrentCodeNumber(RoomNumber);
+       CurrentCodeNumbersService.GetCurrentCodeNumbersAsync();
+
+       _roomCodes = new Dictionary<byte, ushort>();
+        foreach (var keyValuePair in CurrentCodeNumbersService.OrderedCurrentCodeNumbers)
+        {
+            _roomCodes.Add(keyValuePair.Key, RoomCodesService.GetRoomCode(keyValuePair.Key, keyValuePair.Value));
+        }
+    }
+
     private void Generate(int id)
     {
         RoomCodesService.GenerateRoomCodesAsync((byte)id);

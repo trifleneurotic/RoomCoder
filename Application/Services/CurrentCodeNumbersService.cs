@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using RoomCoder.Application.Database;
 using RoomCoder.Application.Models;
@@ -26,6 +27,7 @@ public class CurrentCodeNumbersService
         var currentCodeRecord = (CurrentCode)await _db.CurrentCodes.FirstAsync(x => x.RoomNumber == roomNumber);
         currentCodeRecord.CurrentCodeNumber += 1;
         _db.CurrentCodes.Save<CurrentCode>(currentCodeRecord);
+        
     }
 
     public async void ResetCurrentCodeNumber(byte roomNumber)
@@ -51,7 +53,7 @@ public class CurrentCodeNumbersService
         }
     }
 
-    private async void GetCurrentCodeNumbersAsync()
+    public async void GetCurrentCodeNumbersAsync()
     {
         _orderedCurrentCodeNumbers = new SortedDictionary<byte, byte>();
 

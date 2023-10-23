@@ -26,9 +26,9 @@
                     <Authorized>
                         @if (CurrentCodeNumbersService.OrderedCurrentCodeNumbers[currentCodeEntry.Key] != 19)
                         {
-                            <td>Generate</td>
-                            <td>
-                                <form method="post"><input type="hidden" name="id" value="@idForCycle" /><input type="submit" value="Cycle" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium" /></form>
+                        <td>Generate</td>
+                        <td>
+                                <button @onclick="(() => CycleCheckpoint(currentCodeEntry.Key))" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium">Cycle</button>
                             </td>
                         }
                         else
@@ -43,4 +43,28 @@
             </tr>
         }
     </table>
+    <ConfirmPopup @ref="confirmPopup" Title="Cycle Room Code" 
+    Message="Cycle room code?" 
+    Class="btn btn-psl-delete" 
+    YesCssClass="btn-yes"
+    NoCssClass="btn-no"
+    ConfirmedChanged="(() => CycleProceed())">
+        <ButtonContent>
+            <ion-icon name="trash-outline" style="font-size:2em;color:white;"></ion-icon>
+        </ButtonContent>
+        <MessageTemplate>
+            <div class="card pop-message-card">
+                <div class="card-header">
+                    Cycle Room Code?
+                </div>
+                <div class="card-body">
+                    <p>
+                        You will only want to do this
+                        on a new guest arrival.<br />
+                        Are you sure?
+                    </p>
+                </div>
+            </div>
+        </MessageTemplate>
+</ConfirmPopup>
 </div>

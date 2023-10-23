@@ -1,0 +1,33 @@
+
+<div>
+    <button type="button" class="@Class" @onclick="@ShowPop">
+            @Title
+    </button>
+    @if (Show)
+    {
+        <div class="pop-container">
+            <div class="popconfirm gradient-to-gray">
+                <div class="row">
+                    <div class="col">
+                        @if (MessageTemplate != null)
+                        {
+                            @MessageTemplate
+                        }
+                        else
+                        {
+                            @Message
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <button type="button" class="btn @YesCssClass" @onclick="() => Confirmation(true)">Yes</button>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" class="btn @NoCssClass" @onclick="() => Confirmation(false)">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

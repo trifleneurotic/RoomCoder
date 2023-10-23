@@ -57,3 +57,50 @@ td {
     padding-left: 30px;
     padding-right: 20px;
 }
+
+
+.pop-container {
+    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(132, 4, 4, 0.77);
+}
+
+.popconfirm {
+    color: white;
+    background-color: gray;
+    border-style: solid;
+    border-width: 1px;
+    border-color: lightblue;
+    padding: 10px;
+    border-radius: 15px;
+    min-width: 250px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.pop-message-card, .pop-message-card div {
+    background-color: rgba(0, 0, 0, 0.00)
+}
+
+.gradient-to-gray {
+    background: linear-gradient(0deg,#000000,#888);
+    color: #fff;
+}
+
+.btn-yes {
+    background-color: darkgreen;
+    color: limegreen;
+    width: 100%;
+}
+
+.btn-no {
+    background-color: darkred;
+    color: lightcoral;
+    width: 100%;
+}
