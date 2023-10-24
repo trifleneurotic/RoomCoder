@@ -7,7 +7,7 @@ public partial class ConfirmPopup
     public bool Show { get; set; }
 
     [Parameter]
-    public string Title { get; set; } = "Delete";
+    public string Title { get; set; } = "";
 
     [Parameter]
     public string Class { get; set; } = "btn btn-danger";
