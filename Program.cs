@@ -2,6 +2,7 @@ using Spark.Library.Environment;
 using Spark.Library.Config;
 using RoomCoder.Application.Startup;
 using Vite.AspNetCore.Extensions;
+using Microsoft.Extensions.FileProviders;
 
 EnvManager.LoadConfig();
 
