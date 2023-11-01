@@ -24,6 +24,39 @@ public class RoomCodesService
         return i.ToString("D4");
     }
 
+    public List<ushort> GetAllCodesForRoom(byte roomNumber)
+    {
+        List<ushort>? _orderedCodeNumbersForRoom = new List<ushort>();
+        var roomCodeRecord = (RoomCode)_db.RoomCodes.First(x => x.RoomNumber == roomNumber);
+
+        for (int i = 0; i < CodeLimit; i++)
+        {
+            switch (i)
+            {
+                case 0: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code1); break;
+                case 1: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code2); break;
+                case 2: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code3); break;
+                case 3: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code4); break;
+                case 4: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code5); break;
+                case 5: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code6); break;
+                case 6: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code7); break;
+                case 7: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code8); break;
+                case 8: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code9); break;
+                case 9: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code10); break;
+                case 10: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code11); break;
+                case 11: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code12); break;
+                case 12: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code13); break;
+                case 13: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code14); break;
+                case 14: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code15); break;
+                case 15: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code16); break;
+                case 16: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code17); break;
+                case 17: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code18); break;
+                case 18: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code19); break;
+            }
+        }
+        return _orderedCodeNumbersForRoom;
+    }
+
     public ushort GetRoomCode(byte roomNumber, byte codeNumber)
     {
         var roomCodeRecord = (RoomCode)_db.RoomCodes.First(x => x.RoomNumber == roomNumber);

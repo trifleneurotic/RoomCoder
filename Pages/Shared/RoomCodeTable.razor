@@ -6,6 +6,7 @@
             <th>Room Number</th>
             <th>Current Code</th>
             <th>Count</th>
+            <th>Get All Codes</th>
             <AuthorizeView Roles="@CustomRoles.Admin">
                 <Authorized>
                     <th>Generate</th>
@@ -22,6 +23,7 @@
                 <td>@currentCodeEntry.Key</td>
                 <td>@currentCodeEntry.Value</td>
                 <td>@CurrentCodeNumbersService.OrderedCurrentCodeNumbers[currentCodeEntry.Key] / 19</td>
+                <td><button @onclick="(() => ShowAllRoomCodesForRoom(currentCodeEntry.Key))" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium">Get All Codes</button></td>
                 <AuthorizeView Roles="@CustomRoles.Admin">
                     <Authorized>
                         @if (CurrentCodeNumbersService.OrderedCurrentCodeNumbers[currentCodeEntry.Key] != 19)
@@ -29,7 +31,7 @@
                         <td>Generate</td>
                         <td>
                                 <button @onclick="(() => CycleCheckpoint(currentCodeEntry.Key))" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium">Cycle</button>
-                            </td>
+                        </td>
                         }
                         else
                         {
@@ -67,4 +69,18 @@
             </div>
         </MessageTemplate>
 </ConfirmPopup>
+<ModalPopup @ref="showCodesPopup"
+                  Message="Show room codes"
+                  Class="btn btn-psl-delete"
+                  YesCssClass="btn-yes">
+        <ButtonContent>
+            <ion-icon name="trash-outline" style="font-size:2em;color:white;"></ion-icon>
+        </ButtonContent>
+        <MessageTemplate>
+            <div class="card pop-message-card">
+                <div class="card-body">
+                </div>
+            </div>
+        </MessageTemplate>
+    </ModalPopup>
 </div>

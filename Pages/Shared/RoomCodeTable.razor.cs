@@ -16,6 +16,8 @@ public partial class RoomCodeTable
 
     private ConfirmPopup? confirmPopup;
 
+    private ModalPopup? showCodesPopup;
+
     private Dictionary<byte, ushort> _roomCodes = new Dictionary<byte, ushort>();
 
     private byte RoomNumber;
@@ -41,6 +43,15 @@ public partial class RoomCodeTable
     {
         RoomNumber = (byte)id;
         confirmPopup.ShowPop();
+    }
+
+    private void ShowAllRoomCodesForRoom(int id)
+    {
+        RoomNumber = (byte)id;
+        List<ushort> codeList = RoomCodesService.GetAllCodesForRoom(RoomNumber);
+        showCodesPopup.CodeList = codeList;
+        showCodesPopup.RoomNumberForCodeList = id;
+        showCodesPopup.ShowPop();
     }
 
     private void CycleProceed()
