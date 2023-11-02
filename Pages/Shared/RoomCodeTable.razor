@@ -20,7 +20,7 @@
             var idForCycle = "Cycle_" + currentCodeEntry.Key;
 
             <tr>
-                <td>@currentCodeEntry.Key</td>
+                <td>@GetRoomName(currentCodeEntry.Key)</td>
                 <td>@currentCodeEntry.Value</td>
                 <td>@CurrentCodeNumbersService.OrderedCurrentCodeNumbers[currentCodeEntry.Key] / 7</td>
                 <td><button @onclick="(() => ShowAllRoomCodesForRoom(currentCodeEntry.Key))" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium">Get All Codes</button></td>
@@ -84,3 +84,4 @@
         </MessageTemplate>
     </ModalPopup>
 </div>
+

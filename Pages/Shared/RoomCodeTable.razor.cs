@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Pomelo.EntityFrameworkCore.MySql.Storage.Internal;
 using RoomCoder.Application.Services;
 
 namespace RoomCoder.Pages.Shared;
@@ -45,12 +46,23 @@ public partial class RoomCodeTable
         confirmPopup.ShowPop();
     }
 
+    private string GetRoomName(byte roomNumber)
+    {
+        switch(roomNumber)
+        {
+            case < 13: return roomNumber.ToString();
+            case < 20: return (roomNumber + 1).ToString();
+            case < 26: return "Extra" + (roomNumber % 19).ToString();
+            default: return "Room does not exist";
+        }
+    }
+
     private void ShowAllRoomCodesForRoom(int id)
     {
         RoomNumber = (byte)id;
         List<ushort> codeList = RoomCodesService.GetAllCodesForRoom(RoomNumber);
         showCodesPopup.CodeList = codeList;
-        showCodesPopup.RoomNumberForCodeList = id;
+        showCodesPopup.RoomNameForCodeList = GetRoomName(RoomNumber);
         showCodesPopup.ShowPop();
     }
 

@@ -22,7 +22,7 @@ public partial class ModalPopup
     public List<ushort>? CodeList { get; set; }
 
     [Parameter]
-    public int RoomNumberForCodeList { get; set; }
+    public string RoomNameForCodeList { get; set; }
 
     [Parameter]
     public string Message { get; set; } = "Are you sure?";
