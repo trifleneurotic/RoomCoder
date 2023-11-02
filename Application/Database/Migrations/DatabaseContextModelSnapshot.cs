@@ -102,46 +102,6 @@ namespace RoomCoder.Application.Database.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("code1");
 
-                    b.Property<ushort>("Code10")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("code10");
-
-                    b.Property<ushort>("Code11")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("code11");
-
-                    b.Property<ushort>("Code12")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("code12");
-
-                    b.Property<ushort>("Code13")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("code13");
-
-                    b.Property<ushort>("Code14")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("code14");
-
-                    b.Property<ushort>("Code15")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("code15");
-
-                    b.Property<ushort>("Code16")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("code16");
-
-                    b.Property<ushort>("Code17")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("code17");
-
-                    b.Property<ushort>("Code18")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("code18");
-
-                    b.Property<ushort>("Code19")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("code19");
-
                     b.Property<ushort>("Code2")
                         .HasColumnType("INTEGER")
                         .HasColumnName("code2");
@@ -165,14 +125,6 @@ namespace RoomCoder.Application.Database.Migrations
                     b.Property<ushort>("Code7")
                         .HasColumnType("INTEGER")
                         .HasColumnName("code7");
-
-                    b.Property<ushort>("Code8")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("code8");
-
-                    b.Property<ushort>("Code9")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("code9");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT")

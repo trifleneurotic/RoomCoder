@@ -8,7 +8,8 @@ namespace RoomCoder.Application.Services;
 
 public class CurrentCodeNumbersService
 {
-    private const int CodeLimit = 19;
+    private const int CodeLimit = 7;
+    private const int RoomCount = 19;
 
     private readonly DatabaseContext _db;
 
@@ -43,7 +44,7 @@ public class CurrentCodeNumbersService
 
         if (!_db.CurrentCodes.Any())
         {
-            for (int i = 0; i < CodeLimit; i++)
+            for (int i = 0; i < RoomCount; i++)
             {
                 var newCurrentCodeRecord = new CurrentCode();
                 newCurrentCodeRecord.RoomNumber = (byte)(i + 1);
@@ -57,7 +58,7 @@ public class CurrentCodeNumbersService
     {
         _orderedCurrentCodeNumbers = new SortedDictionary<byte, byte>();
 
-        for (int i = 0; i < CodeLimit; i++)
+        for (int i = 0; i < RoomCount; i++)
         {
             var currentCodeRecord = (CurrentCode)await _db.CurrentCodes.FirstAsync(x => x.RoomNumber == (byte)(i + 1));
             _orderedCurrentCodeNumbers.TryAdd(currentCodeRecord.RoomNumber, currentCodeRecord.CurrentCodeNumber);

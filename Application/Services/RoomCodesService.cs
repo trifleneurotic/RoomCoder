@@ -8,7 +8,8 @@ namespace RoomCoder.Application.Services;
 
 public class RoomCodesService
 {
-    private const int CodeLimit = 19;
+    private const int CodeLimit = 7;
+    private const int RoomCount = 19;
 
     private readonly DatabaseContext _db;
 
@@ -40,18 +41,6 @@ public class RoomCodesService
                 case 4: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code5); break;
                 case 5: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code6); break;
                 case 6: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code7); break;
-                case 7: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code8); break;
-                case 8: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code9); break;
-                case 9: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code10); break;
-                case 10: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code11); break;
-                case 11: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code12); break;
-                case 12: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code13); break;
-                case 13: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code14); break;
-                case 14: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code15); break;
-                case 15: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code16); break;
-                case 16: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code17); break;
-                case 17: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code18); break;
-                case 18: _orderedCodeNumbersForRoom.Add(roomCodeRecord.Code19); break;
             }
         }
         return _orderedCodeNumbersForRoom;
@@ -69,18 +58,6 @@ public class RoomCodesService
             case 5: return roomCodeRecord.Code5;
             case 6: return roomCodeRecord.Code6;
             case 7: return roomCodeRecord.Code7;
-            case 8: return roomCodeRecord.Code8;
-            case 9: return roomCodeRecord.Code9;
-            case 10: return roomCodeRecord.Code10;
-            case 11: return roomCodeRecord.Code11;
-            case 12: return roomCodeRecord.Code12;
-            case 13: return roomCodeRecord.Code13;
-            case 14: return roomCodeRecord.Code14;
-            case 15: return roomCodeRecord.Code15;
-            case 16: return roomCodeRecord.Code16;
-            case 17: return roomCodeRecord.Code17;
-            case 18: return roomCodeRecord.Code18;
-            case 19: return roomCodeRecord.Code19;
         }
         return 0;
     }
@@ -102,18 +79,6 @@ public class RoomCodesService
         roomCodeRecord.Code5 = ushort.Parse(GenerateRoomCode());
         roomCodeRecord.Code6 = ushort.Parse(GenerateRoomCode());
         roomCodeRecord.Code7 = ushort.Parse(GenerateRoomCode());
-        roomCodeRecord.Code8 = ushort.Parse(GenerateRoomCode());
-        roomCodeRecord.Code9 = ushort.Parse(GenerateRoomCode());
-        roomCodeRecord.Code10 = ushort.Parse(GenerateRoomCode());
-        roomCodeRecord.Code11 = ushort.Parse(GenerateRoomCode());
-        roomCodeRecord.Code12 = ushort.Parse(GenerateRoomCode());
-        roomCodeRecord.Code13 = ushort.Parse(GenerateRoomCode());
-        roomCodeRecord.Code14 = ushort.Parse(GenerateRoomCode());
-        roomCodeRecord.Code15 = ushort.Parse(GenerateRoomCode());
-        roomCodeRecord.Code16 = ushort.Parse(GenerateRoomCode());
-        roomCodeRecord.Code17 = ushort.Parse(GenerateRoomCode());
-        roomCodeRecord.Code18 = ushort.Parse(GenerateRoomCode());
-        roomCodeRecord.Code19 = ushort.Parse(GenerateRoomCode());
         _db.RoomCodes.Save<RoomCode>(roomCodeRecord);
     }
     public RoomCodesService(DatabaseContext db)
@@ -122,7 +87,7 @@ public class RoomCodesService
 
         if (!_db.RoomCodes.Any())
         {
-            for (int i = 0; i < CodeLimit; i++)
+            for (int i = 0; i < RoomCount; i++)
             {
                 var roomCodeRecord = new RoomCode();
                 byte roomNumber = (byte)(i + 1);
@@ -134,18 +99,6 @@ public class RoomCodesService
                 roomCodeRecord.Code5 = GetInitialRoomCode(roomNumber, (ushort)5);
                 roomCodeRecord.Code6 = GetInitialRoomCode(roomNumber, (ushort)6);
                 roomCodeRecord.Code7 = GetInitialRoomCode(roomNumber, (ushort)7);
-                roomCodeRecord.Code8 = GetInitialRoomCode(roomNumber, (ushort)8);
-                roomCodeRecord.Code9 = GetInitialRoomCode(roomNumber, (ushort)9);
-                roomCodeRecord.Code10 = GetInitialRoomCode(roomNumber, (ushort)10);
-                roomCodeRecord.Code11 = GetInitialRoomCode(roomNumber, (ushort)11);
-                roomCodeRecord.Code12 = GetInitialRoomCode(roomNumber, (ushort)12);
-                roomCodeRecord.Code13 = GetInitialRoomCode(roomNumber, (ushort)13);
-                roomCodeRecord.Code14 = GetInitialRoomCode(roomNumber, (ushort)14);
-                roomCodeRecord.Code15 = GetInitialRoomCode(roomNumber, (ushort)15);
-                roomCodeRecord.Code16 = GetInitialRoomCode(roomNumber, (ushort)16);
-                roomCodeRecord.Code17 = GetInitialRoomCode(roomNumber, (ushort)17);
-                roomCodeRecord.Code18 = GetInitialRoomCode(roomNumber, (ushort)18);
-                roomCodeRecord.Code19 = GetInitialRoomCode(roomNumber, (ushort)19);
                 _db.RoomCodes.Save<RoomCode>(roomCodeRecord);
             }
         }
