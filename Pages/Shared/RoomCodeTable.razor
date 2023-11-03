@@ -18,25 +18,42 @@
         {
             var idForGenerate = "Generate_" + currentCodeEntry.Key;
             var idForCycle = "Cycle_" + currentCodeEntry.Key;
+            var idForShowCodes = "ShowCodes_" + currentCodeEntry.Key;
 
             <tr>
                 <td>@GetRoomName(currentCodeEntry.Key)</td>
                 <td>@currentCodeEntry.Value</td>
                 <td>@CurrentCodeNumbersService.OrderedCurrentCodeNumbers[currentCodeEntry.Key] / 7</td>
-                <td><button @onclick="(() => ShowAllRoomCodesForRoom(currentCodeEntry.Key))" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium">Get All Codes</button></td>
+                <td>
+                    @if(_viewStatus[currentCodeEntry.Key])
+                    {
+                        <button id="@idForShowCodes" class="px-3 py-4 text-lg bg-gray-200 hover\:bg-gray-700 text-white rounded-md font-medium">Get All Codes</button>
+                    }
+                    else
+                    {
+                        <button id="@idForShowCodes" @onclick="(() => ShowAllRoomCodesForRoom(currentCodeEntry.Key))" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium">Get All Codes</button>
+                    }
+                </td>
                 <AuthorizeView Roles="@CustomRoles.Admin">
                     <Authorized>
                         @if (CurrentCodeNumbersService.OrderedCurrentCodeNumbers[currentCodeEntry.Key] != 7)
                         {
                         <td>Generate</td>
                         <td>
-                                <button @onclick="(() => CycleCheckpoint(currentCodeEntry.Key))" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium">Cycle</button>
+                                @if (_cycleStatus[currentCodeEntry.Key])
+                                {
+                                    <button id="@idForCycle" class="px-3 py-4 text-lg bg-gray-200 hover\:bg-gray-700 text-white rounded-md font-medium">Cycle</button>
+                                }
+                                else
+                                {
+                                    <button id="@idForCycle" @onclick="(() => CycleCheckpoint(currentCodeEntry.Key))" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium">Cycle</button>
+                                }     
                         </td>
                         }
                         else
                         {
                             <td>
-                                <form method="post"><input type="hidden" name="id" value="@idForGenerate" /><input type="submit" value="Generate" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium" /></form>
+                                <form method="post"><input type="hidden" name="id" value="@idForGenerate" /><input onClick="this.form.submit(); this.disabled=true;" type="submit" value="Generate" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium" /></form>
                             </td>
                             <td>Cycle</td>
                         }
@@ -84,4 +101,32 @@
         </MessageTemplate>
     </ModalPopup>
 </div>
+@code {
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        foreach (KeyValuePair<byte, bool> status in _viewStatus)
+        {
+            if(status.Value)
+            {
+                _viewStatus[status.Key] = false;
+                showCodesPopup.ShowPop();
+                InvokeAsync(StateHasChanged);
+                break;
+            }
+        }
+
+        foreach (KeyValuePair<byte, bool> status in _cycleStatus)
+        {
+            if (status.Value)
+            {
+                _cycleStatus[status.Key] = false;
+                confirmPopup.ShowPop();
+                InvokeAsync(StateHasChanged);
+                break;
+            }
+        }
+
+        return base.OnAfterRenderAsync(firstRender);
+    }
+}
 

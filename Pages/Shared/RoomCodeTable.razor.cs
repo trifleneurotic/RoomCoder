@@ -21,14 +21,24 @@ public partial class RoomCodeTable
 
     private Dictionary<byte, ushort> _roomCodes = new Dictionary<byte, ushort>();
 
+    private Dictionary<byte, bool> _viewStatus = new Dictionary<byte, bool>();
+
+    private Dictionary<byte, bool> _cycleStatus = new Dictionary<byte, bool>();
+
     private byte RoomNumber;
 
-    protected override void OnInitialized()
+    private const int CodeLimit = 7;
+    private const int RoomCount = 25;
+
+    protected override async Task OnInitializedAsync()
     {
         base.OnInitialized();
         foreach (var keyValuePair in CurrentCodeNumbersService.OrderedCurrentCodeNumbers)
         {
-            _roomCodes.Add(keyValuePair.Key, RoomCodesService.GetRoomCode(keyValuePair.Key, keyValuePair.Value));
+            await Task.Run(() =>
+            {
+                _roomCodes.Add(keyValuePair.Key, RoomCodesService.GetRoomCode(keyValuePair.Key, keyValuePair.Value));
+            });
         }
 
         var data = PostFormService.Form?["id"];
@@ -38,12 +48,19 @@ public partial class RoomCodeTable
         {
             Generate(Int32.Parse(action.Substring(9)));
         }
+
+        for( var i = 1; i <= RoomCount; i++)
+        {
+           _viewStatus.Add((byte)i, false);
+           _cycleStatus.Add((byte)i, false);
+        }
     }
 
     private void CycleCheckpoint(int id)
     {
         RoomNumber = (byte)id;
-        confirmPopup.ShowPop();
+        _cycleStatus[(byte)id] = true;
+        InvokeAsync(StateHasChanged);
     }
 
     private string GetRoomName(byte roomNumber)
@@ -60,10 +77,13 @@ public partial class RoomCodeTable
     private void ShowAllRoomCodesForRoom(int id)
     {
         RoomNumber = (byte)id;
+        _viewStatus[(byte)id] = true;
+        InvokeAsync(StateHasChanged);
+
         List<ushort> codeList = RoomCodesService.GetAllCodesForRoom(RoomNumber);
+        
         showCodesPopup.CodeList = codeList;
         showCodesPopup.RoomNameForCodeList = GetRoomName(RoomNumber);
-        showCodesPopup.ShowPop();
     }
 
     private void CycleProceed()
