@@ -110,6 +110,11 @@
             _viewStatus.Add((byte)i, false);
             _cycleStatus.Add((byte)i, false);
         }
+
+        foreach (var keyValuePair in CurrentCodeNumbersService.OrderedCurrentCodeNumbers)
+        {
+            _roomCodes.Add(keyValuePair.Key, RoomCodesService.GetRoomCode(keyValuePair.Key, keyValuePair.Value));
+        }
     }
     protected override Task OnAfterRenderAsync(bool firstRender)
     {

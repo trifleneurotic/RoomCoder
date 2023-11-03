@@ -33,13 +33,6 @@ public partial class RoomCodeTable
     protected override async Task OnInitializedAsync()
     {
         base.OnInitialized();
-        foreach (var keyValuePair in CurrentCodeNumbersService.OrderedCurrentCodeNumbers)
-        {
-            await Task.Run(() =>
-            {
-                _roomCodes.Add(keyValuePair.Key, RoomCodesService.GetRoomCode(keyValuePair.Key, keyValuePair.Value));
-            });
-        }
 
         var data = PostFormService.Form?["id"];
         string action = data.GetValueOrDefault().ToString();
