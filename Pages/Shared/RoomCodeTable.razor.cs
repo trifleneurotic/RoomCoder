@@ -48,12 +48,6 @@ public partial class RoomCodeTable
         {
             Generate(Int32.Parse(action.Substring(9)));
         }
-
-        for( var i = 1; i <= RoomCount; i++)
-        {
-           _viewStatus.Add((byte)i, false);
-           _cycleStatus.Add((byte)i, false);
-        }
     }
 
     private void CycleCheckpoint(int id)

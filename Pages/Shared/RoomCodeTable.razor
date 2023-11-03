@@ -1,6 +1,6 @@
 @attribute [Authorize]
-
-<div>
+<AuthorizeView Roles="@($"{CustomRoles.User}, {CustomRoles.Admin}")">
+    <div>
     <table cellpadding="0" cellspacing="0">
         <tr>
             <th>Room Number</th>
@@ -8,7 +8,7 @@
             <th>Count</th>
             <th>Get All Codes</th>
             <AuthorizeView Roles="@CustomRoles.Admin">
-                <Authorized>
+                <Authorized Context="AdminContext">
                     <th>Generate</th>
                     <th>Cycle</th>
                 </Authorized>
@@ -19,7 +19,6 @@
             var idForGenerate = "Generate_" + currentCodeEntry.Key;
             var idForCycle = "Cycle_" + currentCodeEntry.Key;
             var idForShowCodes = "ShowCodes_" + currentCodeEntry.Key;
-
             <tr>
                 <td>@GetRoomName(currentCodeEntry.Key)</td>
                 <td>@currentCodeEntry.Value</td>
@@ -35,7 +34,7 @@
                     }
                 </td>
                 <AuthorizeView Roles="@CustomRoles.Admin">
-                    <Authorized>
+                    <Authorized Context="AdminContext">
                         @if (CurrentCodeNumbersService.OrderedCurrentCodeNumbers[currentCodeEntry.Key] != 7)
                         {
                         <td>Generate</td>
@@ -101,7 +100,17 @@
         </MessageTemplate>
     </ModalPopup>
 </div>
+</AuthorizeView>
 @code {
+
+    protected override void OnInitialized()
+    {
+        for (var i = 1; i <= RoomCount; i++)
+        {
+            _viewStatus.Add((byte)i, false);
+            _cycleStatus.Add((byte)i, false);
+        }
+    }
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
         foreach (KeyValuePair<byte, bool> status in _viewStatus)
