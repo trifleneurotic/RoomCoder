@@ -56,8 +56,13 @@ public partial class RoomCodeTable
         {
             case < 13: return roomNumber.ToString();
             case < 20: return (roomNumber + 1).ToString();
-            case < 26: return "Extra" + (roomNumber % 19).ToString();
-            default: return "Room does not exist";
+            case 20: return "Laundry";
+            case 21: return "Main Entry";
+            case 22: return "Maintenance";
+            case 23: return "Lower East";
+            case 24: return "Upper East";
+            case 25: return "(no room set)";
+            default: return "Room doesn't exist";
         }
     }
 
