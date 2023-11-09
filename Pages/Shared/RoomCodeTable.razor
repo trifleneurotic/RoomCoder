@@ -1,17 +1,5 @@
 @attribute [Authorize]
 @inject IJSRuntime JS
-@if(!Initializing)
-{
-<script>
-    window.setButtonElementDisable = (element) => {
-        element.className = "px-3 py-4 text-lg bg-gray-200 text-white rounded-md font-medium";
-        element.disabled = "true";
-    }
-    window.setButtonElementEnable = (element) => {
-        element.className = "px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium";
-        element.removeAttribute("disabled");
-    }
-</script>
 <AuthorizeView Roles="@($"{CustomRoles.User}, {CustomRoles.Admin}")">
     <div>
     <table cellpadding="0" cellspacing="0">
@@ -155,5 +143,5 @@
 
         return base.OnAfterRenderAsync(firstRender);
     }
-}
+ }
 
