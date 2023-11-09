@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Pomelo.EntityFrameworkCore.MySql.Storage.Internal;
 using RoomCoder.Application.Services;
+using Microsoft.JSInterop;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RoomCoder.Pages.Shared;
 
@@ -25,15 +27,17 @@ public partial class RoomCodeTable
 
     private Dictionary<byte, bool> _cycleStatus = new Dictionary<byte, bool>();
 
+    public Dictionary<byte, ElementReference> _roomViewElements = new Dictionary<byte, ElementReference>();
+
     private byte RoomNumber;
 
     private const int CodeLimit = 7;
     private const int RoomCount = 25;
 
+    private bool Initializing = true;
+
     protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
-
         var data = PostFormService.Form?["id"];
         string action = data.GetValueOrDefault().ToString();
 
@@ -41,6 +45,8 @@ public partial class RoomCodeTable
         {
             Generate(Int32.Parse(action.Substring(9)));
         }
+
+        base.OnInitialized();
     }
 
     private void CycleCheckpoint(int id)
@@ -66,11 +72,13 @@ public partial class RoomCodeTable
         }
     }
 
-    private void ShowAllRoomCodesForRoom(int id)
+    private async void ShowAllRoomCodesForRoom(int id)
     {
         RoomNumber = (byte)id;
         _viewStatus[(byte)id] = true;
-        InvokeAsync(StateHasChanged);
+
+        JS.InvokeVoidAsync("setButtonElementDisable", _roomViewElements[(byte)id]);
+        StateHasChanged();
 
         List<ushort> codeList = RoomCodesService.GetAllCodesForRoom(RoomNumber);
         
