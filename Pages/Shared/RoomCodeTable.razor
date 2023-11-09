@@ -51,14 +51,14 @@
                                 }
                                 else
                                 {
-                                    <button id="@idForCycle" @onclick="(() => CycleCheckpoint(currentCodeEntry.Key))" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium">Cycle</button>
+                                    <button @ref="_cycleElements[currentCodeEntry.Key]" id="@idForCycle" @onclick="(() => CycleCheckpoint(currentCodeEntry.Key))" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium">Cycle</button>
                                 }     
                         </td>
                         }
                         else
                         {
                             <td>
-                                <form method="post"><input type="hidden" name="id" value="@idForGenerate" /><input onClick="this.form.submit(); this.disabled=true;" type="submit" value="Generate" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium" /></form>
+                                <form method="post"><input type="hidden" name="id" value="@idForGenerate" /><input onClick="this.form.submit(); this.className='px-3 py-4 text-lg bg-gray-200 text-white rounded-md font-medium'; this.disabled=true;" type="submit" value="Generate" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium" /></form>
                             </td>
                             <td>Cycle</td>
                         }
@@ -119,6 +119,7 @@
             _viewStatus.Add((byte)i, false);
             _cycleStatus.Add((byte)i, false);
             _roomViewElements.Add((byte)i, new ElementReference());
+            _cycleElements.Add((byte)i, new ElementReference());
         }
 
         foreach (var keyValuePair in CurrentCodeNumbersService.OrderedCurrentCodeNumbers)
@@ -147,6 +148,7 @@
                 _cycleStatus[status.Key] = false;
                 confirmPopup.ShowPop();
                 InvokeAsync(StateHasChanged);
+                JS.InvokeVoidAsync("setButtonElementEnable", _cycleElements[status.Key]);
                 break;
             }
         }

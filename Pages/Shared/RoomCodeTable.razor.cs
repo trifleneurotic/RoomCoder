@@ -29,6 +29,8 @@ public partial class RoomCodeTable
 
     public Dictionary<byte, ElementReference> _roomViewElements = new Dictionary<byte, ElementReference>();
 
+    public Dictionary<byte, ElementReference> _cycleElements = new Dictionary<byte, ElementReference>();
+
     private byte RoomNumber;
 
     private const int CodeLimit = 7;
@@ -53,7 +55,9 @@ public partial class RoomCodeTable
     {
         RoomNumber = (byte)id;
         _cycleStatus[(byte)id] = true;
-        InvokeAsync(StateHasChanged);
+        JS.InvokeVoidAsync("setButtonElementDisable", _cycleElements[(byte)id]);
+        StateHasChanged();
+        // InvokeAsync(StateHasChanged);
     }
 
     private string GetRoomName(byte roomNumber)
