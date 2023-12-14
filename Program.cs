@@ -9,7 +9,7 @@ EnvManager.LoadConfig();
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.SetupSparkConfig();
 
-// Add all services to the container.
+// Add all services to container.
 builder.Services.AddAppServices(builder.Configuration);
 
 var app = builder.Build();
