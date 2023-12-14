@@ -60,7 +60,7 @@
   </Target>
 
   <!-- Build the final assets -->
-  <Target Name="PublishBuildAssets" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Release' ">
+  <Target Name="PublishBuildAssets" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' ">
     <!-- Build the final assets -->
     <Exec Command="npm run build" />
     <Exec Command="npm run dev" />
