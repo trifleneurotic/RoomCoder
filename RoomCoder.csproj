@@ -62,7 +62,8 @@
   <!-- Build the final assets -->
   <Target Name="PublishBuildAssets" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Release' ">
     <!-- Build the final assets -->
-    <Exec Command="npm run build && npm run dev" />
+    <Exec Command="npm run build" />
+    <Exec Command="npm run dev" />
   </Target>
 
 </Project>
