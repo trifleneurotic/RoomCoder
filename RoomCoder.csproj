@@ -23,25 +23,25 @@
   <ItemGroup>
     <Folder Include="Application\Database\Migrations\" />
     <Folder Include="Storage\Logging\" />
+    <Folder Include="Storage\Mail\" />
   </ItemGroup>
-
+  
   <ItemGroup>
-   <Content Include="Assets\**">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-   </Content>
+    <Content Remove="TailwindPages\**" />
+    <Compile Remove="TailwindPages\**" />
+    <EmbeddedResource Remove="TailwindPages\**" />
+    <None Remove="TailwindPages\**" />
   </ItemGroup>
-
-  <ItemGroup>
-   <Content Include="Pages\**">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-   </Content>
-  </ItemGroup>
-
+  
   <ItemGroup>
    <Content Include="tailwind.config.js">
     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
    </Content>
   </ItemGroup>
+
+ <ItemGroup>
+  <None Include="TailwindPages\**" CopyToOutputDirectory="PreserveNewest" />
+ </ItemGroup>
 
  <ItemGroup>
   <Content Include="vite.config.js">
@@ -67,9 +67,15 @@
   </Target>
 
   <!-- Build the final assets -->
-  <Target Name="PublishBuildAssets" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Release' ">
+  <Target Name="PublishBuildAssets" BeforeTargets="Build">
     <!-- Build the final assets -->
     <Exec Command="npm run build" />
   </Target>
+
+  <ItemGroup>
+   <Content Include="Assets\**">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+   </Content>
+  </ItemGroup>
 
 </Project>

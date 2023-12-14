@@ -1,0 +1,147 @@
+@attribute [Authorize]
+@inject IJSRuntime JS
+<AuthorizeView Roles="@($"{CustomRoles.User}, {CustomRoles.Admin}")">
+    <div>
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <th>Room Number</th>
+            <th>Current Code</th>
+            <th>Count</th>
+            <th>Get All Codes</th>
+            <AuthorizeView Roles="@CustomRoles.Admin">
+                <Authorized Context="AdminContext">
+                    <th>Generate</th>
+                    <th>Cycle</th>
+                </Authorized>
+            </AuthorizeView>
+        </tr>
+        @foreach (KeyValuePair<byte, ushort> currentCodeEntry in _roomCodes)
+        {
+            var idForGenerate = "Generate_" + currentCodeEntry.Key;
+            var idForCycle = "Cycle_" + currentCodeEntry.Key;
+            var idForShowCodes = "ShowCodes_" + currentCodeEntry.Key;
+            <tr>
+                <td>@GetRoomName(currentCodeEntry.Key)</td>
+                <td>@currentCodeEntry.Value</td>
+                <td>@CurrentCodeNumbersService.OrderedCurrentCodeNumbers[currentCodeEntry.Key] / 7</td>
+                <td>
+                        <button @ref="_roomViewElements[currentCodeEntry.Key]" id="@idForShowCodes" @onclick="(() => ShowAllRoomCodesForRoom(currentCodeEntry.Key))" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium">Get All Codes</button>
+                </td>
+                <AuthorizeView Roles="@CustomRoles.Admin">
+                    <Authorized Context="AdminContext">
+                        @if (CurrentCodeNumbersService.OrderedCurrentCodeNumbers[currentCodeEntry.Key] != 7)
+                        {
+                        <td>Generate</td>
+                        <td>
+                                @if (_cycleStatus[currentCodeEntry.Key])
+                                {
+                                    <button id="@idForCycle" class="px-3 py-4 text-lg bg-gray-200 hover\:bg-gray-700 text-white rounded-md font-medium">Cycle</button>
+                                }
+                                else
+                                {
+                                    <button @ref="_cycleElements[currentCodeEntry.Key]" id="@idForCycle" @onclick="(() => CycleCheckpoint(currentCodeEntry.Key))" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium">Cycle</button>
+                                }     
+                        </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <form method="post"><input type="hidden" name="id" value="@idForGenerate" /><input onClick="this.form.submit(); this.className='px-3 py-4 text-lg bg-gray-200 text-white rounded-md font-medium'; this.disabled=true;" type="submit" value="Generate" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium" /></form>
+                            </td>
+                            <td>Cycle</td>
+                        }
+                    </Authorized>
+                </AuthorizeView>
+            </tr>
+        }
+    </table>
+    <ConfirmPopup @ref="confirmPopup"
+    Message="Cycle room code?" 
+    Class="btn btn-psl-delete" 
+    YesCssClass="btn-yes"
+    NoCssClass="btn-no"
+    ConfirmedChanged="(() => CycleProceed())">
+        <ButtonContent>
+            <ion-icon name="trash-outline" style="font-size:2em;color:white;"></ion-icon>
+        </ButtonContent>
+        <MessageTemplate>
+            <div class="card pop-message-card">
+                <div class="card-header">
+                    Cycle Room Code?
+                </div>
+                <div class="card-body">
+                    <p>
+                        You will only want to do this
+                        on a new guest arrival.<br />
+                        Are you sure?
+                    </p>
+                </div>
+            </div>
+        </MessageTemplate>
+</ConfirmPopup>
+<ModalPopup @ref="showCodesPopup"
+                  Message="Show room codes"
+                  Class="btn btn-psl-delete"
+                  YesCssClass="btn-yes">
+        <ButtonContent>
+            <ion-icon name="trash-outline" style="font-size:2em;color:white;"></ion-icon>
+        </ButtonContent>
+        <MessageTemplate>
+            <div class="card pop-message-card">
+                <div class="card-body">
+                </div>
+            </div>
+        </MessageTemplate>
+    </ModalPopup>
+</div>
+</AuthorizeView>
+
+@code {
+    private ElementReference buttonElement;
+
+    protected override void OnInitialized()
+    {
+        Initializing = false;
+        for (var i = 1; i <= RoomCount; i++)
+        {
+            _viewStatus.Add((byte)i, false);
+            _cycleStatus.Add((byte)i, false);
+            _roomViewElements.Add((byte)i, new ElementReference());
+            _cycleElements.Add((byte)i, new ElementReference());
+        }
+
+        foreach (var keyValuePair in CurrentCodeNumbersService.OrderedCurrentCodeNumbers)
+        {
+            _roomCodes.Add(keyValuePair.Key, RoomCodesService.GetRoomCode(keyValuePair.Key, keyValuePair.Value));
+        }
+    }
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        foreach (KeyValuePair<byte, bool> status in _viewStatus)
+        {
+            if(status.Value)
+            {
+                _viewStatus[status.Key] = false;
+                showCodesPopup.ShowPop();
+                InvokeAsync(StateHasChanged);
+                JS.InvokeVoidAsync("setButtonElementEnable", _roomViewElements[status.Key]);
+                break;
+            }
+        }
+
+        foreach (KeyValuePair<byte, bool> status in _cycleStatus)
+        {
+            if (status.Value)
+            {
+                _cycleStatus[status.Key] = false;
+                confirmPopup.ShowPop();
+                InvokeAsync(StateHasChanged);
+                JS.InvokeVoidAsync("setButtonElementEnable", _cycleElements[status.Key]);
+                break;
+            }
+        }
+
+        return base.OnAfterRenderAsync(firstRender);
+    }
+ }
+

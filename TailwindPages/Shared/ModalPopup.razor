@@ -1,0 +1,36 @@
+
+<div>
+    <button type="button" class="@Class" @onclick="@ShowPop">
+            @Title
+    </button>
+    @if (Show)
+    {
+        <div class="pop-container">
+            <div class="popconfirm gradient-to-gray">
+                <div class="row">
+                    <div class="col">
+                        @if (MessageTemplate != null)
+                        {
+                            @MessageTemplate
+                        }
+                        else
+                        {
+                            @Message
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <p>Code List for Room <b>@RoomNameForCodeList</b></p>
+                        @foreach(var roomCode in CodeList)
+                        {
+                            @roomCode
+                            <br />
+                        }
+                        <button type="button" class="btn @YesCssClass" @onclick="() => Confirmation(true)">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
