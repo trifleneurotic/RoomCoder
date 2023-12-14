@@ -10,7 +10,7 @@
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Coravel" Version="4.2.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -22,11 +22,17 @@
 
   <ItemGroup>
     <Folder Include="Application\Database\Migrations\" />
-	<Folder Include="Storage\Logging\" />
+    <Folder Include="Storage\Logging\" />
   </ItemGroup>
 
   <ItemGroup>
    <Content Include="Assets\**">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+   </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+   <Content Include="Pages\**">
     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
    </Content>
   </ItemGroup>

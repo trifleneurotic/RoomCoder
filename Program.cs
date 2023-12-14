@@ -4,6 +4,7 @@ using RoomCoder.Application.Startup;
 using Vite.AspNetCore.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.EntityFrameworkCore;
+using RoomCoder.Application.Database;
 
 EnvManager.LoadConfig();
 
@@ -17,7 +18,7 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<DbContext>();
+    var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
     db.Database.Migrate();
 }
 
