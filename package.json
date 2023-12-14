@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "dotnet ./RoomCoder.dll --urls http://0.0.0.0:5002 & vite",
+    "dev": "dotnet ./RoomCoder.dll & vite",
     "build": "vite build"
   },
   "devDependencies": {
