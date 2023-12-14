@@ -25,12 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-   <Content Include="Pages\**">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-   </Content>
-  </ItemGroup>
-
-  <ItemGroup>
    <Content Include="Assets\**">
     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
    </Content>
