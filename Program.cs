@@ -3,6 +3,7 @@ using Spark.Library.Config;
 using RoomCoder.Application.Startup;
 using Vite.AspNetCore.Extensions;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.EntityFrameworkCore;
 
 EnvManager.LoadConfig();
 
@@ -13,6 +14,12 @@ builder.Configuration.SetupSparkConfig();
 builder.Services.AddAppServices(builder.Configuration);
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<DbContext>();
+    db.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
