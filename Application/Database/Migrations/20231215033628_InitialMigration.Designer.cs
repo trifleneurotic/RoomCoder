@@ -12,8 +12,8 @@ using RoomCoder.Application.Database;
 namespace RoomCoder.Application.Database.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20231215030534_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20231215033628_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
