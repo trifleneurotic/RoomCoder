@@ -5,8 +5,25 @@ using Vite.AspNetCore.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.EntityFrameworkCore;
 using RoomCoder.Application.Database;
+using System.Diagnostics;
 
 EnvManager.LoadConfig();
+
+var psi = new ProcessStartInfo
+    {
+        FileName = "screen",
+        Arguments = "-S vite -d -m vite",
+        UseShellExecute = false,
+        RedirectStandardOutput = true,
+        RedirectStandardError = true,
+    };
+
+var proc = new Process
+    {
+        StartInfo = psi
+    };
+
+proc.Start();
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.SetupSparkConfig();
