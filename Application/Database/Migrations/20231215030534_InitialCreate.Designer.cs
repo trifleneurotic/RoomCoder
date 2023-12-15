@@ -12,7 +12,7 @@ using RoomCoder.Application.Database;
 namespace RoomCoder.Application.Database.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20231215025415_InitialCreate")]
+    [Migration("20231215030534_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
