@@ -34,12 +34,6 @@
   </ItemGroup>
   
   <ItemGroup>
-   <Content Include="runVite.sh">
-    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-   </Content>
-  </ItemGroup>
-
-  <ItemGroup>
    <Content Include="tailwind.config.js">
     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
    </Content>
