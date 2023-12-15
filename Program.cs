@@ -9,22 +9,6 @@ using System.Diagnostics;
 
 EnvManager.LoadConfig();
 
-var psi = new ProcessStartInfo
-    {
-        FileName = "/bin/bash",
-        Arguments = "-c nohup vite &",
-        UseShellExecute = false,
-        RedirectStandardOutput = true,
-        RedirectStandardError = true,
-    };
-
-var proc = new Process
-    {
-        StartInfo = psi
-    };
-
-proc.Start();
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.SetupSparkConfig();
 
@@ -36,6 +20,8 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+    db.Database.EnsureDeleted();
+    db.Database.EnsureCreated();
 }
 
 // Configure the HTTP request pipeline.
