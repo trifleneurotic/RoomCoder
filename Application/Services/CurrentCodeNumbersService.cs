@@ -27,15 +27,15 @@ public class CurrentCodeNumbersService
         }
     }
 
-    public async void CycleCurrentCodeNumber(byte roomNumber)
+    public async Task CycleCurrentCodeNumber(byte roomNumber)
     {
         var currentCodeRecord = (CurrentCode)await _db.CurrentCodes.FirstAsync(x => x.RoomNumber == roomNumber);
         currentCodeRecord.CurrentCodeNumber += 1;
         _db.CurrentCodes.Save<CurrentCode>(currentCodeRecord);
-        
+
     }
 
-    public async void ResetCurrentCodeNumber(byte roomNumber)
+    public async Task ResetCurrentCodeNumber(byte roomNumber)
     {
         var currentCodeRecord = (CurrentCode)await _db.CurrentCodes.FirstAsync(x => x.RoomNumber == roomNumber);
         currentCodeRecord.CurrentCodeNumber = 1;

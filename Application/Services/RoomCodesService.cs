@@ -69,7 +69,7 @@ public class RoomCodesService
         return ushort.Parse(sb.ToString());
     }
 
-    public async void GenerateRoomCodesAsync(byte roomNumber)
+    public async Task GenerateRoomCodesAsync(byte roomNumber)
     {
         var roomCodeRecord = (RoomCode)await _db.RoomCodes.FirstAsync(x => x.RoomNumber == roomNumber);
         roomCodeRecord.Code1 = ushort.Parse(GenerateRoomCode());

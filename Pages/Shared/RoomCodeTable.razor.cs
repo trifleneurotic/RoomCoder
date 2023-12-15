@@ -8,6 +8,7 @@ using Pomelo.EntityFrameworkCore.MySql.Storage.Internal;
 using RoomCoder.Application.Services;
 using Microsoft.JSInterop;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using AsyncBridge;
 
 namespace RoomCoder.Pages.Shared;
 
@@ -92,7 +93,11 @@ public partial class RoomCodeTable
 
     private void CycleProceed()
     {
-       CurrentCodeNumbersService.CycleCurrentCodeNumber(RoomNumber);
+        using (var A = AsyncHelper.Wait)
+        {
+             A.Run(CurrentCodeNumbersService.CycleCurrentCodeNumber(RoomNumber));
+        }
+
        // CurrentCodeNumbersService.GetCurrentCodeNumbersAsync();
 
        _roomCodes = new Dictionary<byte, ushort>();
@@ -104,7 +109,14 @@ public partial class RoomCodeTable
 
     private void Generate(int id)
     {
-        RoomCodesService.GenerateRoomCodesAsync((byte)id);
-        CurrentCodeNumbersService.ResetCurrentCodeNumber((byte)id);
+        using (var A = AsyncHelper.Wait)
+        {
+             A.Run(RoomCodesService.GenerateRoomCodesAsync((byte)id));
+        }
+
+        using (var A = AsyncHelper.Wait)
+        {
+             A.Run(CurrentCodeNumbersService.ResetCurrentCodeNumber((byte)id));
+        }
     }
 }
