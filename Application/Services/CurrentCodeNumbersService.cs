@@ -12,13 +12,14 @@ public class CurrentCodeNumbersService
     private const int RoomCount = 25;
 
     private readonly DatabaseContext _db;
+    Dispatcher d;
 
     private static SortedDictionary<byte, byte>? _orderedCurrentCodeNumbers;
     public SortedDictionary<byte, byte> OrderedCurrentCodeNumbers
     {
         get
         {
-            this.GetCurrentCodeNumbersAsync().Result;
+            d.InvokeAsync(async () => { await this.GetCurrentCodeNumbersAsync(); });
             return _orderedCurrentCodeNumbers;
         }
     }
@@ -54,7 +55,7 @@ public class CurrentCodeNumbersService
         }
     }
 
-    public async void GetCurrentCodeNumbersAsync()
+    public async Task GetCurrentCodeNumbersAsync()
     {
         _orderedCurrentCodeNumbers = new SortedDictionary<byte, byte>();
 
