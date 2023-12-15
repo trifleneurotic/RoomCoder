@@ -18,7 +18,7 @@ public class CurrentCodeNumbersService
     {
         get
         {
-            this.GetCurrentCodeNumbersAsync();
+            this.GetCurrentCodeNumbersAsync().Result;
             return _orderedCurrentCodeNumbers;
         }
     }
