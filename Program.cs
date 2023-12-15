@@ -8,7 +8,8 @@ using RoomCoder.Application.Database;
 using System.Diagnostics;
 
 EnvManager.LoadConfig();
-
+System.IO.Directory.CreateDirectory("/app/Storage/Mail");
+)
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.SetupSparkConfig();
 
@@ -16,13 +17,6 @@ builder.Configuration.SetupSparkConfig();
 builder.Services.AddAppServices(builder.Configuration);
 
 var app = builder.Build();
-
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
-    db.Database.EnsureDeleted();
-    db.Database.EnsureCreated();
-}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

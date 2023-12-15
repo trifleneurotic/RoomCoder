@@ -36,7 +36,6 @@ public static class AppServiceRegistration
         services.AddEventServices();
         services.AddEvents();
         services.AddMailer(config);
-        services.AddTransient<DatabaseContext>();
 
         // remove if in Prod
         services.AddMvc().AddRazorPagesOptions(o =>
