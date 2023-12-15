@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using RoomCoder.Application.Database;
 using RoomCoder.Application.Models;
 using Spark.Library.Extensions;
+using AsyncBridge;
 
 namespace RoomCoder.Application.Services;
 
@@ -12,14 +13,16 @@ public class CurrentCodeNumbersService
     private const int RoomCount = 25;
 
     private readonly DatabaseContext _db;
-    Dispatcher d;
 
     private static SortedDictionary<byte, byte>? _orderedCurrentCodeNumbers;
     public SortedDictionary<byte, byte> OrderedCurrentCodeNumbers
     {
         get
         {
-            d.InvokeAsync(async () => { await this.GetCurrentCodeNumbersAsync(); });
+            using (var A = AsyncHelper.Wait)
+            {
+             A.Run(this.GetCurrentCodeNumbersAsync());
+            }
             return _orderedCurrentCodeNumbers;
         }
     }
