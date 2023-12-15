@@ -11,8 +11,8 @@ EnvManager.LoadConfig();
 
 var psi = new ProcessStartInfo
     {
-        FileName = "screen",
-        Arguments = "-S vite -d -m vite",
+        FileName = "/bin/bash",
+        Arguments = "-c nohup vite &",
         UseShellExecute = false,
         RedirectStandardOutput = true,
         RedirectStandardError = true,
