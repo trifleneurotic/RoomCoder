@@ -85,7 +85,7 @@ public partial class RoomCodeTable
         StateHasChanged();
 
         List<ushort> codeList = RoomCodesService.GetAllCodesForRoom(RoomNumber);
-        
+
         showCodesPopup.CodeList = codeList;
         showCodesPopup.RoomNameForCodeList = GetRoomName(RoomNumber);
     }
@@ -93,7 +93,7 @@ public partial class RoomCodeTable
     private void CycleProceed()
     {
        CurrentCodeNumbersService.CycleCurrentCodeNumber(RoomNumber);
-       CurrentCodeNumbersService.GetCurrentCodeNumbersAsync();
+       // CurrentCodeNumbersService.GetCurrentCodeNumbersAsync();
 
        _roomCodes = new Dictionary<byte, ushort>();
         foreach (var keyValuePair in CurrentCodeNumbersService.OrderedCurrentCodeNumbers)
