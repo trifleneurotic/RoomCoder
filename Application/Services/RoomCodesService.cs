@@ -175,25 +175,25 @@ public class RoomCodesService
                   case 12:
                     programmingCodeRecord.ProgCode = "168435";
                     break;
-                  case 14:
+                  case 13:
                     programmingCodeRecord.ProgCode = "752420";
                     break;
-                  case 15:
+                  case 14:
                     programmingCodeRecord.ProgCode = "738256";
                     break;
-                  case 16:
+                  case 15:
                     programmingCodeRecord.ProgCode = "315198";
                     break;
-                  case 17:
+                  case 16:
                     programmingCodeRecord.ProgCode = "516785";
                     break;
-                  case 18:
+                  case 17:
                     programmingCodeRecord.ProgCode = "696785";
                     break;
-                  case 19:
+                  case 18:
                     programmingCodeRecord.ProgCode = "534503";
                     break;
-                  case 20:
+                  case 19:
                     programmingCodeRecord.ProgCode = "616298";
                     break;
                   default:
