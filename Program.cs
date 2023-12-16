@@ -29,7 +29,6 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
 	db.Database.EnsureDeleted();
-	db.Database.EnsureCreated();
     db.Database.Migrate();
 }
 
