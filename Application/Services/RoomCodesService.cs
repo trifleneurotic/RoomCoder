@@ -3,6 +3,7 @@ using RoomCoder.Application.Models;
 using Spark.Library.Extensions;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using AsyncBridge;
 
 namespace RoomCoder.Application.Services;
 
@@ -14,6 +15,31 @@ public class RoomCodesService
     private readonly DatabaseContext _db;
 
     private Random _random = new Random();
+
+    private Dictionary<byte, string> _progCodes;
+
+    public Dictionary<byte, string> ProgrammingCodes
+    {
+        get
+        {
+            using (var A = AsyncHelper.Wait)
+            {
+             A.Run(this.GetProgrammingCodesAsync());
+            }
+            return _progCodes;
+        }
+    }
+
+    public async Task GetProgrammingCodesAsync()
+    {
+        _progCodes = new Dictionary<byte, string>();
+
+        for (int i = 0; i < RoomCount; i++)
+        {
+            var programmingCodeRecord = (ProgrammingCode)await _db.ProgrammingCodes.FirstAsync(x => x.RoomNumber == (byte)(i + 1));
+            _progCodes.TryAdd(programmingCodeRecord.RoomNumber, programmingCodeRecord.ProgCode);
+        }
+    }
 
     private string GenerateRoomCode()
     {
@@ -100,6 +126,81 @@ public class RoomCodesService
                 roomCodeRecord.Code6 = GetInitialRoomCode(roomNumber, (ushort)6);
                 roomCodeRecord.Code7 = GetInitialRoomCode(roomNumber, (ushort)7);
                 _db.RoomCodes.Save<RoomCode>(roomCodeRecord);
+            }
+        }
+
+        if (!_db.ProgrammingCodes.Any())
+        {
+            for (int i = 0; i < RoomCount; i++)
+            {
+                var programmingCodeRecord = new ProgrammingCode();
+                byte roomNum = (byte)(i + 1);
+                programmingCodeRecord.RoomNumber = roomNum;
+
+                switch (roomNum)
+                {
+                  case 1:
+                    programmingCodeRecord.ProgCode = "0";
+                    break;
+                  case 2:
+                    programmingCodeRecord.ProgCode = "151672";
+                    break;
+                  case 3:
+                    programmingCodeRecord.ProgCode = "0";
+                    break;
+                  case 4:
+                    programmingCodeRecord.ProgCode = "584856";
+                    break;
+                  case 5:
+                    programmingCodeRecord.ProgCode = "524116";
+                    break;
+                  case 6:
+                    programmingCodeRecord.ProgCode = "406785";
+                    break;
+                  case 7:
+                    programmingCodeRecord.ProgCode = "0";
+                    break;
+                  case 8:
+                    programmingCodeRecord.ProgCode = "716190";
+                    break;
+                  case 9:
+                    programmingCodeRecord.ProgCode = "735216";
+                    break;
+                  case 10:
+                    programmingCodeRecord.ProgCode = "240456";
+                    break;
+                  case 11:
+                    programmingCodeRecord.ProgCode = "0";
+                    break;
+                  case 12:
+                    programmingCodeRecord.ProgCode = "168435";
+                    break;
+                  case 14:
+                    programmingCodeRecord.ProgCode = "752420";
+                    break;
+                  case 15:
+                    programmingCodeRecord.ProgCode = "738256";
+                    break;
+                  case 16:
+                    programmingCodeRecord.ProgCode = "315198";
+                    break;
+                  case 17:
+                    programmingCodeRecord.ProgCode = "516785";
+                    break;
+                  case 18:
+                    programmingCodeRecord.ProgCode = "696785";
+                    break;
+                  case 19:
+                    programmingCodeRecord.ProgCode = "534503";
+                    break;
+                  case 20:
+                    programmingCodeRecord.ProgCode = "616298";
+                    break;
+                  default:
+                    programmingCodeRecord.ProgCode = "0";
+                    break;
+                }
+                _db.ProgrammingCodes.Save<ProgrammingCode>(programmingCodeRecord);
             }
         }
     }

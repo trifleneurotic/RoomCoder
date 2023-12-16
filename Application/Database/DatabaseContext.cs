@@ -14,6 +14,7 @@ public class DatabaseContext : DbContext
     public virtual DbSet<UserRole> UserRoles { get; set; }
     public virtual DbSet<RoomCode> RoomCodes { set; get; }
     public virtual DbSet<CurrentCode> CurrentCodes { set; get; }
+    public virtual DbSet<ProgrammingCode> ProgrammingCodes { set; get; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

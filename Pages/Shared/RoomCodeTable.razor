@@ -7,6 +7,7 @@
             <th>Room Number</th>
             <th>Current Code</th>
             <th>Count</th>
+            <th>Programming Code</th>
             <th>Get All Codes</th>
             <AuthorizeView Roles="@CustomRoles.Admin">
                 <Authorized Context="AdminContext">
@@ -24,6 +25,7 @@
                 <td>@GetRoomName(currentCodeEntry.Key)</td>
                 <td>@currentCodeEntry.Value</td>
                 <td>@CurrentCodeNumbersService.OrderedCurrentCodeNumbers[currentCodeEntry.Key] / 7</td>
+                <td>@RoomCodesService.ProgrammingCodes[currentCodeEntry.Key]</td>
                 <td>
                         <button @ref="_roomViewElements[currentCodeEntry.Key]" id="@idForShowCodes" @onclick="(() => ShowAllRoomCodesForRoom(currentCodeEntry.Key))" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium">Get All Codes</button>
                 </td>
