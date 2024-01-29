@@ -9,7 +9,6 @@ namespace RoomCoder.Application.Services;
 
 public class CurrentCodeNumbersService
 {
-    private const int CodeLimit = 7;
     private const int RoomCount = 25;
 
     private readonly DatabaseContext _db;

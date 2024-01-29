@@ -8,7 +8,7 @@ using RoomCoder.Application.Database;
 using System.Diagnostics;
 
 EnvManager.LoadConfig();
-System.IO.Directory.CreateDirectory("/app/Storage/Mail");
+// System.IO.Directory.CreateDirectory("/app/Storage/Mail");
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.SetupSparkConfig();
 

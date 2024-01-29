@@ -33,8 +33,6 @@ public partial class RoomCodeTable
     public Dictionary<byte, ElementReference> _cycleElements = new Dictionary<byte, ElementReference>();
 
     private byte RoomNumber;
-
-    private const int CodeLimit = 7;
     private const int RoomCount = 25;
 
     private bool Initializing = true;

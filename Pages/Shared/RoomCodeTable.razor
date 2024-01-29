@@ -24,7 +24,7 @@
             <tr>
                 <td>@GetRoomName(currentCodeEntry.Key)</td>
                 <td>@currentCodeEntry.Value</td>
-                <td>@CurrentCodeNumbersService.OrderedCurrentCodeNumbers[currentCodeEntry.Key] / 7</td>
+                <td>@CurrentCodeNumbersService.OrderedCurrentCodeNumbers[currentCodeEntry.Key] / 17</td>
                 <td>@RoomCodesService.ProgrammingCodes[currentCodeEntry.Key]</td>
                 <td>
                         <button @ref="_roomViewElements[currentCodeEntry.Key]" id="@idForShowCodes" @onclick="(() => ShowAllRoomCodesForRoom(currentCodeEntry.Key))" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium">Get All Codes</button>
@@ -42,7 +42,7 @@
                                 else
                                 {
                                     <button @ref="_cycleElements[currentCodeEntry.Key]" id="@idForCycle" @onclick="(() => CycleCheckpoint(currentCodeEntry.Key))" class="px-3 py-4 text-lg bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-medium">Cycle</button>
-                                }     
+                                }
                         </td>
                         }
                         else
@@ -58,8 +58,8 @@
         }
     </table>
     <ConfirmPopup @ref="confirmPopup"
-    Message="Cycle room code?" 
-    Class="btn btn-psl-delete" 
+    Message="Cycle room code?"
+    Class="btn btn-psl-delete"
     YesCssClass="btn-yes"
     NoCssClass="btn-no"
     ConfirmedChanged="(() => CycleProceed())">
