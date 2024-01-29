@@ -31,7 +31,7 @@
                 </td>
                 <AuthorizeView Roles="@CustomRoles.Admin">
                     <Authorized Context="AdminContext">
-                        @if (CurrentCodeNumbersService.OrderedCurrentCodeNumbers[currentCodeEntry.Key] != 7)
+                        @if (CurrentCodeNumbersService.OrderedCurrentCodeNumbers[currentCodeEntry.Key] != 17)
                         {
                         <td>Generate</td>
                         <td>
