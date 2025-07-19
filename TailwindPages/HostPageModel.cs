@@ -1,4 +1,4 @@
-﻿using IARRoomCoder.Application.Services;
+﻿using RoomCoder.Application.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace RoomCoder.Pages

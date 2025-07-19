@@ -12,7 +12,7 @@ using RoomCoder.Application.Jobs;
 using Spark.Library.Mail;
 using Vite.AspNetCore.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using IARRoomCoder.Application.Services;
+using RoomCoder.Application.Services;
 
 namespace RoomCoder.Application.Startup;
 
